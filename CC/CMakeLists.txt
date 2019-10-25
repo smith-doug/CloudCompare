@@ -74,7 +74,12 @@ if ( COMPILE_CC_CORE_LIB_SHARED )
 			install_shared( CC_CORE_LIB ${dest} 1 )
 		endforeach()
 	else()
-		install_shared( CC_CORE_LIB ${CMAKE_INSTALL_LIBDIR}/cloudcompare 0 ) #default destination: /usr/lib/cloudcompare
+    set_target_properties(CC_CORE_LIB PROPERTIES PUBLIC_HEADER "${header_list}")
+    install(TARGETS CC_CORE_LIB EXPORT CC_CORE_LIB DESTINATION ${CMAKE_INSTALL_LIBDIR}/cloudcompare PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include/cloudcompare )
+    install(EXPORT CC_CORE_LIB DESTINATION ${CMAKE_INSTALL_LIBDIR}/cloudcompare FILE cc_core_lib-config.cmake)
+    export(PACKAGE CCP)
+    #install_shared( CC_CORE_LIB ${CMAKE_INSTALL_LIBDIR}/cloudcompare 0 ) #default destination: /usr/lib/cloudcompare
+
 	endif()
 endif()
 
